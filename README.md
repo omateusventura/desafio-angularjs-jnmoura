@@ -3,6 +3,13 @@
 Este projeto é um desafio técnico proposto pela empresa JN Moura. Para que este projeto funcione plenamente é necessário
 a configuração do seu back-end que se encontra no link [Back-end desafio JN Moura](https://github.com/omateusventura/desafio-csharp-jnmoura.git)
 
+## Setup do projeto
+```
+Node 20.12.2
+Angular 17
+Tailwind
+```
+
 ## Iniciando o projeto
 
 ```
