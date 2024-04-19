@@ -7,7 +7,6 @@ a configuração do seu back-end que se encontra no link [Back-end desafio JN Mo
 
 ```
 git clone https://github.com/omateusventura/desafio-angularjs-jnmoura.git
-git clone https://github.com/omateusventura/desafio-csharp-jnmoura.git
 ```
 
 
