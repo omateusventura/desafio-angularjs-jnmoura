@@ -1,0 +1,113 @@
+<section class="w-screen max-w-7xl px-8 py-6">
+    <div class="w-full flex justify-between items-center">
+        <div>
+            <div class="flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="#999999" viewBox="0 0 256 256"><path d="M222.14,105.85l-80-80a20,20,0,0,0-28.28,0l-80,80A19.86,19.86,0,0,0,28,120v96a12,12,0,0,0,12,12h64a12,12,0,0,0,12-12V164h24v52a12,12,0,0,0,12,12h64a12,12,0,0,0,12-12V120A19.86,19.86,0,0,0,222.14,105.85ZM204,204H164V152a12,12,0,0,0-12-12H104a12,12,0,0,0-12,12v52H52V121.65l76-76,76,76Z"></path></svg>
+                <span class="font-medium text-slate-400 text-sm">/ Pessoas</span>
+            </div>
+            <h1 class="text-xl font-semibold">Pessoas</h1>
+         </div>
+        <div>
+            <a class="flex items-center gap-2 text-sm font-medium bg-slate-900 text-white rounded-md px-5 py-3" routerLink="/cadastro">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#FFFFFF" viewBox="0 0 256 256"><path d="M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z"></path></svg>
+                Novo
+            </a>
+        </div>
+    </div>
+    <table class="w-full bg-white rounded-xl shadow-md border border-slate-100 mt-8">
+        <thead>
+            <tr class="border-b border-slate-100/80">
+                <th class="p-3 text-start text-[0.9rem] text-slate-900 font-bold">ID</th>
+                <th class="p-3 text-start text-[0.9rem] text-slate-900 font-bold">Nome</th>
+                <th class="p-3 text-start text-[0.9rem] text-slate-900 font-bold">Data de Nascimento</th>
+                <th class="p-3 text-center">Status</th>
+                <th class="p-3 text-start text-[0.9rem] text-slate-900 font-bold">Nacionalidade</th>
+                <th class="p-3 text-start text-[0.9rem] text-slate-900 font-bold"></th>
+            </tr>
+        </thead>
+
+        <!-- Informações -->
+        <tbody *ngIf="peoples.length > 0" >
+            <tr class="odd:bg-slate-50/40" *ngFor="let people of peoples">
+                <td class="px-3 py-2 text-start text-sm">{{ people.id }}</td>
+                <td class="px-3 py-2 text-start text-sm">{{ people.fullname }}</td>
+                <td class="px-3 py-2 text-start text-sm">{{ people.dateofbirth.split('-').reverse().join('/') }}</td>
+                <td class="px-3 py-2 text-start">
+                    <span *ngIf="people.inactive === 0" class="block w-[80px] mx-auto bg-emerald-100 text-center text-emerald-500 text-xs font-bold px-4 py-2 rounded-md">
+                        Ativo
+                    </span>
+
+                    <span *ngIf="people.inactive !== 0" class="block w-[80px] mx-auto bg-red-100 text-center text-red-500 text-xs font-bold px-4 py-2 rounded-md">
+                        Inativo
+                    </span>
+                </td>
+                <td class="px-3 py-2 text-start text-sm">
+                    <span *ngIf="people.nationality == 1">Brasileiro</span>
+                    <span *ngIf="people.nationality != 1">Outro</span>
+                </td>
+                <td class="px-3 py-2 text-start text-sm flex items-center gap-1">
+                    <a class="relative top-2" routerLink="/editar/{{ people.id }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="#000000" viewBox="0 0 256 256"><path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM51.31,160,136,75.31,152.69,92,68,176.68ZM48,179.31,76.69,208H48Zm48,25.38L79.31,188,164,103.31,180.69,120Zm96-96L147.31,64l24-24L216,84.68Z"></path></svg>
+                    </a>
+                    <button class="relative top-2" (click)="showDialog()">
+                        <svg class="fill-red-300" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg>
+                    </button>
+
+                    <!-- Dialog -->
+                    <p-dialog class="pt-0" [(visible)]="visible" [modal]="true" [style]="{ width: '400px' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+                        <ng-template pTemplate="header">
+                            <div class="inline-flex align-items-center justify-content-center gap-2">
+                                <span class="font-bold white-space-nowrap">Atenção</span>
+                            </div>
+                        </ng-template>
+                        <p class="m-0">
+                            Deseja realmente excluir esta informação?
+                        </p>
+                        <div class="flex justify-end items-center gap-2 mt-4 border-t pt-4">
+                            <button (click)="visible = false"  class="w-[100px] py-2 text-sm text-sm text-slate-600 rounded-md border">Cancelar</button>
+                            <button (click)="delete(people.id)" class="w-[100px] py-2 bg-red-500 text-white text-sm rounded-md">Excluir</button>
+                        </div>
+                    </p-dialog>
+                </td>
+            </tr>
+        </tbody>
+
+        <!-- Sem informação -->
+        <tbody *ngIf="initialLoading === false && peoples.length == 0" class="animate-pulse">
+            <tr>
+                <td colspan="10" class="text-center text-sm px-3 py-3">
+                    Nenhuma informação encontrada :(
+                </td>
+            </tr>
+        </tbody>
+
+        <!-- Loading -->
+        <tbody *ngIf="initialLoading == true" class="animate-pulse">
+            <tr *ngFor="let item of amountSkeleton">
+                <td class="px-3 py-3">
+                    <span class="block w-10 h-4 bg-gray-200 rounded-md"></span>
+                </td>
+                <td class="px-3 py-3">
+                    <span class="block w-72 h-4 bg-gray-200 rounded-md"></span>
+                </td>
+                <td class="px-3 py-3">
+                    <span class="block w-48 h-4 bg-gray-200 rounded-md"></span>
+                </td>
+                <td class="px-3 py-3">
+                    <span class="block w-20 h-4 bg-gray-200 rounded-md mx-auto"></span>
+                </td>
+                <td class="px-3 py-3">
+                    <span class="block w-24 h-4 bg-gray-200 rounded-md"></span>
+                </td>
+                <td class="px-3 py-3">
+                    <span class="block w-10 h-4 bg-gray-200 rounded-md"></span>
+                </td>
+            </tr>
+        </tbody>
+
+        <!-- Toast -->
+        <p-toast></p-toast>
+    </table>
+</section>
+
+<router-outlet />
